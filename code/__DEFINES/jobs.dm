@@ -207,6 +207,7 @@
 #define PURITAN		(1<<0)
 #define ORTHODOXIST	(1<<1)
 #define ABSOLVER (1<<2)
+#define ATTENDANT (1<<3)
 
 #define GUILDSMEN	(1<<11)
 
@@ -329,6 +330,7 @@
 #define JDO_PURITAN 40
 #define JDO_ORTHODOXIST 40.1
 #define JDO_ABSOLVER 40.2
+#define JDO_ATTENDANT 40.3
 
 #define BITFLAG_HOLY_WARRIOR (1<<0)
 #define BITFLAG_ROYALTY (1<<1)
