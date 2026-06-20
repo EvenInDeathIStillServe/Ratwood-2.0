@@ -209,6 +209,104 @@
 	appearance_flags = NONE
 	opacity = FALSE
 
+/obj/structure/fluff/traveltile/dungeon_entry
+	name = "dungeon entrance"
+	desc = "A portal into a newly created dungeon. Step through and the depths will unfold."
+	icon = 'icons/roguetown/misc/portal.dmi'
+	icon_state = "portal"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 0
+	bound_width = 96
+	appearance_flags = NONE
+	opacity = FALSE
+
+	var/dungeon_generated = FALSE
+	var/dungeon_template_path = "_maps/map_files/otherz/dungeon.dmm"
+	var/dungeon_level = null
+	var/list/dungeon_exit_tiles = list()
+
+/obj/structure/fluff/traveltile/dungeon_entry/proc/generate_dungeon()
+	if(dungeon_generated)
+		return TRUE
+	var/datum/map_template/template = new(dungeon_template_path)
+	var/list/traits = SSmapping.dungeon_config?.traits
+	var/datum/space_level/level = template.load_new_z(traits)
+	if(!level)
+		return FALSE
+	dungeon_generated = TRUE
+	dungeon_level = level.z_value
+	addtimer(CALLBACK(src, PROC_REF(setup_generated_dungeon_exits)), 100)
+	return TRUE
+
+/obj/structure/fluff/traveltile/dungeon_entry/proc/setup_generated_dungeon_exits()
+	if(!dungeon_level)
+		return
+	for(var/obj/structure/fluff/traveltile/dungeon_exit/dung_exit in GLOB.traveltiles)
+		var/turf/our_turf = get_turf(dung_exit)
+		if(our_turf && our_turf.z == dungeon_level)
+			dung_exit.aportalid = aportalgoesto
+			dung_exit.aportalgoesto = aportalid
+			dung_exit.required_trait = required_trait
+			dungeon_exit_tiles |= dung_exit
+	visible_message(span_notice("[src] has finished linking."))
+	return
+
+/obj/structure/fluff/traveltile/dungeon_entry/attack_hand(mob/user)
+	if(!aportalgoesto)
+		return
+	if(!isliving(user))
+		return
+	if(!generate_dungeon())
+		to_chat(user, "<b>The portal fizzles and fails to open.</b>")
+		return
+	var/fou
+	for(var/obj/structure/fluff/traveltile/T in shuffle(GLOB.traveltiles))
+		if(T.aportalid == aportalgoesto)
+			if(T == src)
+				continue
+			if(!try_living_travel(T, user))
+				return
+			fou = TRUE
+			break
+	if(!fou)
+		to_chat(user, "<b>It is a dead end.</b>")
+	. = ..()
+
+/obj/structure/fluff/traveltile/dungeon_entry/Crossed(atom/movable/AM)
+	. = ..()
+	var/fou
+	if(!aportalgoesto)
+		return
+	if(!isliving(AM))
+		return
+	if(!generate_dungeon())
+		to_chat(AM, "<b>The portal fizzles and fails to open.</b>")
+		return
+	var/mob/living/L = AM
+	for(var/obj/structure/fluff/traveltile/T in shuffle(GLOB.traveltiles))
+		if(T.aportalid == aportalgoesto)
+			if(T == src)
+				continue
+			if(!try_living_travel(T, L))
+				return
+			fou = TRUE
+			break
+	if(!fou)
+		to_chat(AM, "<b>It is a dead end.</b>")
+
+/obj/structure/fluff/traveltile/dungeon_exit
+	name = "dungeon exit"
+	desc = "A portal out of a dungeon. Step through and the surface will unfold."
+	icon = 'icons/roguetown/misc/portal.dmi'
+	icon_state = "portal"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 0
+	bound_width = 96
+	appearance_flags = NONE
+	opacity = FALSE
+
 /obj/structure/fluff/traveltile/magicportal
 	desc = "flickering, warping magick"
 	name = "mysterious portal"

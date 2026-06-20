@@ -53,12 +53,28 @@
 	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
 
-/datum/map_template/proc/load_new_z()
+/datum/map_template/proc/load_new_z(list/traits = null)
+	if(!traits)
+		traits = list(ZTRAIT_AWAY = TRUE)
+	var/datum/parsed_map/parsed = new(file(mappath))
+	var/total_z = parsed.bounds[MAP_MAXZ] - parsed.bounds[MAP_MINZ] + 1
+	if(total_z <= 0)
+		return FALSE
+
 	var/x = round((world.maxx - width)/2)
 	var/y = round((world.maxy - height)/2)
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = load_map(
+	var/datum/space_level/level = null
+	for(var/i = 1; i <= total_z; ++i)
+		var/list/level_traits = (i <= traits.len ? traits[i] : list(ZTRAIT_AWAY = TRUE))
+		if(i == 1)
+			level = SSmapping.add_new_zlevel(name, level_traits)
+		else
+			SSmapping.add_new_zlevel("[name] [i]", level_traits)
+	if(!level)
+		return FALSE
+
+	var/datum/parsed_map/loaded = load_map(
 		file(mappath),
 		x,
 		y,
@@ -66,14 +82,14 @@
 		no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS),
 		place_on_top = TRUE,
 	)
-	var/list/bounds = parsed.bounds
+	var/list/bounds = loaded.bounds
 	if(!bounds)
 		return FALSE
 
 	repopulate_sorted_areas()
 
 	//initialize things that are normally initialized after map load
-	parsed.initTemplateBounds()
+	loaded.initTemplateBounds()
 	smooth_zlevel(world.maxz)
 	log_game("Z-level [name] loaded at [x],[y],[world.maxz]")
 

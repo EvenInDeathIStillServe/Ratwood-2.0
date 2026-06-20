@@ -21,13 +21,6 @@
 	var/admin_spawned = FALSE
 	var/small_item = FALSE //Small items can be grouped into a single crate.
 
-/datum/supply_pack/New()
-	..()
-	var/lim = round(cost * 0.1)
-	cost = rand(cost-lim, cost+lim)
-	if(cost < 1)
-		cost = 1
-
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
 	var/obj/structure/closet/crate/C
 	if(paying_account)

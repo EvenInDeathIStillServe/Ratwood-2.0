@@ -344,7 +344,8 @@ SUBSYSTEM_DEF(treasury)
 
 /// Returns correct tax (0, 100) for a living mob based on its traits & job
 /datum/controller/subsystem/treasury/proc/get_tax_value_for(mob/living/person)
-	if(HAS_TRAIT(person, TRAIT_OUTLANDER))
+	return 0 //DOD IS A TAX HAVEN
+/*	if(HAS_TRAIT(person, TRAIT_OUTLANDER))
 		return taxation_cat_settings[TAX_CAT_OUTLANDER]["taxAmount"] / 100
 	else if(HAS_TRAIT(person, TRAIT_NOBLE))
 		return taxation_cat_settings[TAX_CAT_NOBLE]["taxAmount"] / 100
@@ -354,6 +355,7 @@ SUBSYSTEM_DEF(treasury)
 		return taxation_cat_settings[TAX_CAT_CHURCH]["taxAmount"] / 100
 	else
 		return taxation_cat_settings[TAX_CAT_PEASANTS]["taxAmount"] / 100
+*/
 
 /// Checks if a given mob can be fined, based on its traits & job. TRUE if can be fined, FALSE if protected by decrees
 /datum/controller/subsystem/treasury/proc/check_fine_exemption(mob/living/person)

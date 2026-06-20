@@ -17,7 +17,6 @@
 	desc = "Gilded tombs do worms enfold."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "streetvendor1"
-	density = TRUE
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
 	anchored = TRUE
@@ -38,7 +37,7 @@
 	// Where to record value spent
 	var/value_record_key = STATS_GOLDFACE_VALUE_SPENT
 	// True to make sure it bypass all taxes no matter what
-	var/bypass_tax = FALSE
+	var/bypass_tax = TRUE
 	var/list/categories = list(
 		"Alcohols",
 		"Food",
@@ -68,13 +67,11 @@
 		"Weapons (Steel)",
 		"Weapons (Exotic)",
 	)
-	var/is_public = FALSE // Whether it is a public access vendor.
+	var/is_public = TRUE // Whether it is a public access vendor.
 	var/extra_fee = 0 // Extra Guild Fees on purchases. Meant to make publicface very unprofitable.
 
 /obj/structure/roguemachine/goldface/public
 	name = "SILVERFACE"
-	extra_fee = 0.5
-	profit_margin = 0.5
 	is_public = TRUE
 	locked = FALSE
 	motto = "SILVERFACE - Commerce for all."

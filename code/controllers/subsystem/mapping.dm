@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
+	var/datum/map_config/dungeon_config
 	var/datum/map_adjustment/map_adjustment
 
 	var/map_voted = FALSE
@@ -127,6 +128,7 @@ SUBSYSTEM_DEF(mapping)
 	used_turfs = SSmapping.used_turfs
 
 	config = SSmapping.config
+	dungeon_config = SSmapping.dungeon_config
 	next_map_config = SSmapping.next_map_config
 
 	clearing_reserved_turfs = SSmapping.clearing_reserved_turfs
@@ -200,9 +202,9 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/otherZ = list()
 
-	#ifndef NO_DUNGEON
-	otherZ += load_map_config("_maps/map_files/otherz/dungeon.json")
-	#endif
+	// Load dungeon map config so runtime dungeon generation still uses its settings.
+	// We do not automatically load the dungeon map at round start.
+	dungeon_config = load_map_config("_maps/map_files/otherz/dungeon.json", error_if_missing = FALSE)
 
 	for(var/map_json in config.other_z)
 		otherZ += load_map_config(map_json)
