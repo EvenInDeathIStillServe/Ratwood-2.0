@@ -998,7 +998,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			<div id="traits" class="tab-content active">
 			
 		<div class="statpack-section">
-			<h2>Statpack Selection</h2>
+			<h2>Stat Allocation</h2>
 			<div class="statpack-current">"}
 	
 	// Build statpack name with stats inline
@@ -1014,7 +1014,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	
 	html += {"		</div>
 			<div class="actions">
-				<a class='btn btn-select' href='byond://?src=\ref[src];statpack_action=change'>Change Statpack</a>
+				<a class='btn btn-select' href='byond://?src=\ref[src];pointbuy=allocate'>Allocate</a>
 		</div>
 	</div>
 		<div class="statpack-section">

@@ -82,7 +82,17 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/pronouns = HE_HIM				// LETHALSTONE EDIT: character's pronouns (well duh)
 	var/voice_pack = "Default"
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
-	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
+	/// Per-slot point-buy choices: assoc stat -> target value. Empty/absent = all 10. Only mutated by the Save button.
+	var/list/pointbuy_allocations = list()
+	/// In-progress allocation edits not yet saved. Null when no edits are pending; the panel re-inits from allocations on open.
+	var/list/pointbuy_draft
+	/// Per-slot "Virtuous" toggle: spends no stat points, grants virtue access (replaces the old virtuous statpack).
+	var/pointbuy_virtuous = FALSE
+	/// Per-slot "Fated" toggle: stats are randomly rolled at spawn (cached per ckey+slot for the session).
+	var/pointbuy_fated = FALSE
+	/// Legacy statpack record - not applied while point-buy is the active mechanic, but kept loaded/saved
+	/// so player savefiles stay backward-compatible if this PR is ever reverted.
+	var/datum/statpack/statpack = new /datum/statpack/wildcard/austere
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
 	var/selected_title = "None"
@@ -424,11 +434,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/preferences/proc/set_new_race(datum/species/new_race, user)
 	pref_species = new_race
+	// Point-buy pool, costs, and favored stats are species-dependent, so a species switch
+	// invalidates the previous build - clear both the saved allocations and the in-progress draft.
+	pointbuy_allocations = list()
+	pointbuy_draft = null
 	real_name = pref_species.random_name(gender,1)
 	ResetJobs()
 	if(user)
 		if(pref_species.desc)
-			to_chat(user, "[pref_species.desc]")
+			to_chat(user, "[pref_species.desc][pref_species.get_pointbuy_description()]")
 		if(pref_species.expanded_desc)
 			to_chat(user, "<a href='?src=[REF(user)];view_species_info=[pref_species.expanded_desc]'>Read More</a>")
 		to_chat(user, "<font color='red'>Classes reset.</font>")
@@ -629,7 +643,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtue = GLOB.virtues[/datum/virtue/none]
 				if(virtuetwo.type in pref_species.restricted_virtues)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
-			if(statpack.name != "Virtuous")
+			if(!grants_virtues())
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
 			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
 			var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
