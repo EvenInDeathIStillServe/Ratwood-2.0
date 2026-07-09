@@ -168,3 +168,13 @@
 	name = "internal testicles"
 	visible_organ = FALSE
 	accessory_type = /datum/sprite_accessory/none
+
+/obj/item/organ/butt
+	name = "butt"
+	icon_state = "severedtail" //placeholder
+	visible_organ = TRUE
+	zone = BODY_ZONE_CHEST
+	slot = ORGAN_SLOT_BUTT
+	organ_dna_type = /datum/organ_dna/butt
+	accessory_type = /datum/sprite_accessory/butt
+	var/butt_size = DEFAULT_BUTT_SIZE

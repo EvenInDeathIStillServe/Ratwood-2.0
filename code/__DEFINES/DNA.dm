@@ -162,7 +162,7 @@
 #define EYE_COLOR_LIST list("#865900", "#06b400", "#312f27", "#008e83", "#002d8e", "#c16c00")
 
 #define MIN_PENIS_SIZE 1
-#define MAX_PENIS_SIZE 3
+#define MAX_PENIS_SIZE 5
 #define DEFAULT_PENIS_SIZE 2
 
 #define PENIS_TYPE_PLAIN 1
@@ -193,3 +193,6 @@
 #define MAX_BREASTS_SIZE 12
 #define DEFAULT_BREASTS_SIZE 3
 
+#define MIN_BUTT_SIZE 1
+#define MAX_BUTT_SIZE 7
+#define DEFAULT_BUTT_SIZE 1

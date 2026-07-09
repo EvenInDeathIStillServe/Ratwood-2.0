@@ -31,7 +31,7 @@
 	/// Our charge gauge
 	var/charge = SEX_MAX_CHARGE
 	/// Whether we want to screw until finished, or non stop
-	var/do_until_finished = TRUE
+	var/do_until_finished = FALSE
 	/// The bed (if) we're occupying, update on starting an action
 	var/obj/structure/bed/rogue/bed = null
 	var/target_on_bed = FALSE
@@ -308,11 +308,11 @@
 	return TRUE
 
 /datum/sex_controller/proc/adjust_speed(amt)
-	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_SPEED_MAX : SEX_SPEED_MAX - 1
+	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_SPEED_MAX : SEX_SPEED_MAX
 	speed = clamp(speed + amt, SEX_SPEED_MIN, max_setting)
 
 /datum/sex_controller/proc/adjust_force(amt)
-	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_FORCE_MAX : SEX_FORCE_MAX - 1
+	var/max_setting = (HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || HAS_TRAIT(user, TRAIT_DEPRAVED) || user.has_status_effect(/datum/status_effect/debuff/emberwine)) ? SEX_FORCE_MAX : SEX_FORCE_MAX
 	force = clamp(force + amt, SEX_FORCE_MIN, max_setting)
 /datum/sex_controller/proc/adjust_arousal_manual(amt)
 	manual_arousal = clamp(manual_arousal + amt, SEX_MANUAL_AROUSAL_MIN, SEX_MANUAL_AROUSAL_MAX)
@@ -522,7 +522,7 @@
 /datum/status_effect/creampie_leak
 	id = "creampie_leak"
 	alert_type = null // don't show an alert on screen
-	tick_interval = 12 SECONDS
+	tick_interval = 3 SECONDS
 	duration = 60 SECONDS
 	var/contents_to_drip = /datum/reagent/erpjuice/cum
 	var/orifice = SEX_PART_NULL
@@ -534,7 +534,7 @@
 /datum/status_effect/creampie_leak/long
 	id = "creampie_leak_long"
 	alert_type = null // don't show an alert on screen
-	tick_interval = 12 SECONDS
+	tick_interval = 3 SECONDS
 	duration = 120 SECONDS
 
 /datum/status_effect/facial/on_apply()
@@ -671,13 +671,15 @@
 	return floor(volume)
 
 /datum/sex_controller/proc/get_load_bursts()
-	switch(get_semen_volume())
+	return speed
+/*	switch(get_semen_volume())
 		if(4)
 			return 2
 		if(5 to INFINITY)
 			return 3
 		else
 			return 1
+*/
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
@@ -713,8 +715,9 @@
 	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
 		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
-	user.emote("sexmoanhvy", forced = TRUE)
-	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
+	if(prob(50))
+		user.emote("sexmoanhvy", forced = TRUE)
+	//user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
 	record_round_statistic(STATS_PLEASURES)
@@ -1329,15 +1332,15 @@
 	var/datum/sex_action/action = SEX_ACTION(current_action)
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = TRUE // always start subtle supported actions with subtle mode on
+	do_subtle_action = FALSE // always start subtle supported actions with subtle mode on
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
 	while(TRUE)
 		if(!isnull(target.client) && target.client.prefs.sexable == FALSE) //Vrell - Needs changed to let me test sex mechanics solo
 			break
-		if(!user.stamina_add(action.stamina_cost * get_stamina_cost_multiplier()))
-			break
+		//if(!user.stamina_add(action.stamina_cost * get_stamina_cost_multiplier()))
+		//	break
 		if(!do_after(user, (action.do_time / get_speed_multiplier()), target = target, progress = show_progress))
 			break
 		if(current_action == null || performed_action_type != current_action)
@@ -1488,13 +1491,13 @@
 		if(SEX_SPEED_LOW)
 			return 1.0
 		if(SEX_SPEED_MID)
-			return 1.5
+			return 2
 		if(SEX_SPEED_HIGH)
-			return 2.0
-		if(SEX_SPEED_EXTREME)
-			return 2.5
-		if(SEX_SPEED_LUDICROUS)
 			return 3
+		if(SEX_SPEED_EXTREME)
+			return 4
+		if(SEX_SPEED_LUDICROUS)
+			return 5
 
 /datum/sex_controller/proc/get_stamina_cost_multiplier()
 	switch(force)
@@ -1513,29 +1516,29 @@
 	switch(passed_force)
 		if(SEX_FORCE_LOW)
 			if(giving)
-				return 0.8
+				return 1
 			else
-				return 0.8
+				return 1
 		if(SEX_FORCE_MID)
 			if(giving)
-				return 1.2
+				return 2
 			else
-				return 1.2
+				return 2
 		if(SEX_FORCE_HIGH)
 			if(giving)
-				return 1.6
+				return 2.5
 			else
-				return 1.2
+				return 2
 		if(SEX_FORCE_EXTREME)
 			if(giving)
-				return 2.0
+				return 3
 			else
-				return 0.8
+				return 2.5
 		if(SEX_FORCE_LUDICROUS)
 			if(giving)
-				return 2.0
+				return 4
 			else
-				return 0.8
+				return 3.5
 
 /datum/sex_controller/proc/get_force_pain_multiplier(passed_force)
 	switch(passed_force)

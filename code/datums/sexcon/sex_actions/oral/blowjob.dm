@@ -48,7 +48,7 @@
 		target.visible_message(span_love("[target] cums into [user]'s mouth!"))
 		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
 			target.sexcon.cum_into(oral = TRUE, splashed_user = user, knot_action = src, knot_swap_roles = TRUE, knot_btm = user, consume_charge = i == 1 ? TRUE : FALSE)
-			sleep(10)
+			sleep(5)
 
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = FALSE
 

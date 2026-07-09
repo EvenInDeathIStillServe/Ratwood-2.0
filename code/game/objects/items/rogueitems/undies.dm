@@ -52,10 +52,21 @@
 	covers_breasts = TRUE
 	sprite_acc = /datum/sprite_accessory/underwear/bikini
 
+/obj/item/undies/thong_bikini
+	name = "thong bikini"
+	icon_state = "thong_bikini"
+	covers_breasts = TRUE
+	sprite_acc = /datum/sprite_accessory/underwear/thong_bikini
+
 /obj/item/undies/panties
 	name = "panties"
 	icon_state = "panties"
 	sprite_acc = /datum/sprite_accessory/underwear/panties
+
+/obj/item/undies/thong
+	name = "thong"
+	icon_state = "thong"
+	sprite_acc = /datum/sprite_accessory/underwear/thong
 
 /obj/item/undies/leotard
 	name = "leotard"

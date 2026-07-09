@@ -89,6 +89,7 @@
 		/datum/customizer/organ/horns/lamia,
 		/datum/customizer/organ/penis/lamia, // only tapered or hemi tapered or tentacle
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/human,
 		/datum/customizer/organ/vagina/anthro,
 		)
 	body_marking_sets = list(

@@ -174,6 +174,9 @@
 				display1 = span_info("ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
 		. = list("[display1] [display2]")
 
+		if(!user.client)
+			. += span_warning("They're not all there...")
+
 		if(HAS_TRAIT(src, TRAIT_WITCH))
 			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_WITCH))
 				. += span_warning("A witch! Their presence brings an unsettling aura.")

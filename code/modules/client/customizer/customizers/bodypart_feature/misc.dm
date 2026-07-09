@@ -69,7 +69,9 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/underwear/briefs,
 		/datum/sprite_accessory/underwear/panties,
+		/datum/sprite_accessory/underwear/thong,
 		/datum/sprite_accessory/underwear/bikini,
+		/datum/sprite_accessory/underwear/thong_bikini,
 		/datum/sprite_accessory/underwear/leotard,
 		/datum/sprite_accessory/underwear/athletic_leotard,
 		/datum/sprite_accessory/underwear/braies,

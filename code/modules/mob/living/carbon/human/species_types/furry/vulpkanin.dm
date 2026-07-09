@@ -102,6 +102,7 @@
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
+		/datum/customizer/organ/butt/human,
 		/datum/customizer/organ/vagina/animal,
 		)
 	body_marking_sets = list(

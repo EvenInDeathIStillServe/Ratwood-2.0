@@ -49,7 +49,7 @@
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 				user.try_impregnate(target)
-			sleep(10)
+			sleep(5)
 		user.virginity = FALSE
 
 	if(user.sexcon.considered_limp())
@@ -101,7 +101,7 @@
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_ANUS, consume_charge = i == 1 ? TRUE : FALSE)
 			if(HAS_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON) && !target.getorganslot(ORGAN_SLOT_VAGINA))
 				user.try_impregnate(target)
-			sleep(10)
+			sleep(5)
 		user.virginity = FALSE
 
 	if(user.sexcon.considered_limp())

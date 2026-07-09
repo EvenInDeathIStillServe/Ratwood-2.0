@@ -50,7 +50,7 @@
 		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
-			sleep(10)
+			sleep(5)
 		user.virginity = FALSE
 		target.virginity = FALSE
 
@@ -103,7 +103,7 @@
 		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
 			user.sexcon.cum_into(splashed_user = target, orifice = SEX_PART_CUNT, consume_charge = i == 1 ? TRUE : FALSE)
 			user.try_impregnate(target)
-			sleep(10)
+			sleep(5)
 		user.virginity = FALSE
 		target.virginity = FALSE
 

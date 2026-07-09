@@ -50,7 +50,7 @@
 		user.visible_message(span_love("[user] cums into [target]'s throat!"))
 		for(var/i = 1; i <= user.sexcon.get_load_bursts(); i++)
 			user.sexcon.cum_into(oral = TRUE, splashed_user = target, consume_charge = i == 1 ? TRUE : FALSE) // give facial status effect for the target, considering this was rough throat sex
-			sleep(10)
+			sleep(5)
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))

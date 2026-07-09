@@ -80,6 +80,7 @@
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/human,
 		/datum/customizer/organ/vagina/human,
 		/datum/customizer/organ/horns/tusks,
 		/datum/customizer/organ/ears/halforc,

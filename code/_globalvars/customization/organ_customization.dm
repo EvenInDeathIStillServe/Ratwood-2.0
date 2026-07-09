@@ -2,6 +2,8 @@ GLOBAL_LIST_INIT(named_penis_sizes, list(
 	"Small" = 1,
 	"Average" = 2,
 	"Large" = 3,
+	"Massive" = 4,
+	"Gargantuan" = 5,
 ))
 
 GLOBAL_LIST_INIT(named_ball_sizes, list(
@@ -21,6 +23,16 @@ GLOBAL_LIST_INIT(named_breast_sizes, list(
 	"Massive" = 7,
 	"Heaping" = 8,
 	"Obscene" = 9
+))
+
+GLOBAL_LIST_INIT(named_butt_sizes, list(
+	"Slight" = 1,
+	"Small" = 2,
+	"Moderate" = 3,
+	"Large" = 4,
+	"Generous" = 5,
+	"Heavy" = 6,
+	"Massive" = 7
 ))
 
 GLOBAL_LIST_INIT(customizer_choices, build_customizer_choices())

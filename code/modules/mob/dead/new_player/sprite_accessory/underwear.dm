@@ -40,10 +40,28 @@
 
 	return "bikini_f_" + "[breasts.breast_size]"
 
+/datum/sprite_accessory/underwear/thong_bikini
+	name = "Thong Bikini"
+	icon_state = "female_thong_bikini"
+	underwear_type = /obj/item/undies/thong_bikini
+	hides_breasts = TRUE
+
+/datum/sprite_accessory/underwear/thong_bikini/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/breasts = owner.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!breasts || breasts.breast_size < 0 || breasts.breast_size > 9)
+		return "thong_bikini_f_0"
+
+	return "thong_bikini_f_" + "[breasts.breast_size]"
+
 /datum/sprite_accessory/underwear/panties
 	name = "Panties"
 	icon_state = "panties"
 	underwear_type = /obj/item/undies/panties
+
+/datum/sprite_accessory/underwear/thong
+	name = "Thong"
+	icon_state = "thong"
+	underwear_type = /obj/item/undies/thong
 
 /datum/sprite_accessory/underwear/leotard
 	name = "Leotard"

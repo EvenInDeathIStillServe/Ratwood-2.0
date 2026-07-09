@@ -4,6 +4,7 @@
 	color_key_names = list("Member", "Skin")
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER) //Vrell - Yes I know this is hacky but it works for now
 	var/uses_size_sprites = TRUE
+	var/max_sprite_size = 3
 
 /datum/sprite_accessory/penis/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
@@ -25,9 +26,9 @@
 
 	if(uses_size_sprites)
 		if(pp.erect_state == ERECT_STATE_HARD)
-			return "[icon_state]_2_[min(pp.penis_size, 2)]"
+			return "[icon_state]_2_[min(pp.penis_size, max_sprite_size)]"
 		else
-			return "[icon_state]_1_[min(pp.penis_size, 2)]"
+			return "[icon_state]_1_[min(pp.penis_size, max_sprite_size)]"
 	else
 		if(pp.erect_state == ERECT_STATE_HARD)
 			return "[icon_state]_2"
@@ -45,6 +46,7 @@
 	icon_state = "human"
 	name = "Plain"
 	color_key_defaults = list(KEY_CHEST_COLOR, KEY_CHEST_COLOR)
+	max_sprite_size = 5
 
 /datum/sprite_accessory/penis/knotted
 	icon_state = "knotted"
@@ -141,7 +143,7 @@
 /datum/sprite_accessory/breasts
 	icon = 'icons/mob/sprite_accessory/genitals/breasts.dmi'
 	color_key_name = "Breasts"
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_BEHIND_LAYER)
+	relevant_layers = list(BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
 
 /datum/sprite_accessory/breasts/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	var/obj/item/organ/breasts/badonkers = organ
@@ -219,3 +221,25 @@
 	icon_state = "cloaca"
 	name = "Cloaca"
 	default_colors = list("f99696")
+
+/datum/sprite_accessory/butt
+	icon = 'icons/mob/sprite_accessory/genitals/butts.dmi'
+	color_key_name = "Butt"
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_BEHIND_LAYER)
+
+/datum/sprite_accessory/butt/adjust_appearance_list(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	generic_gender_feature_adjust(appearance_list, organ, bodypart, owner, OFFSET_BELT, OFFSET_BELT_F)
+
+/datum/sprite_accessory/butt/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/butt/butt = organ
+	return "[icon_state]_[butt.butt_size]"
+
+/datum/sprite_accessory/butt/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(owner.sexcon && owner.sexcon.bottom_exposed == TRUE)
+		return TRUE
+	return is_human_part_visible(owner, HIDEJUMPSUIT|HIDECROTCH)
+
+/datum/sprite_accessory/butt/pair
+	name = "Butt"
+	icon_state = "butt"
+	color_key_defaults = list(KEY_SKIN_COLOR)

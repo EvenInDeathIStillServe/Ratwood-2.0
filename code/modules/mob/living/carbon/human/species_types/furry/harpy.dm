@@ -92,6 +92,7 @@
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/human,
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/organ/snout/harpy,
 		/datum/customizer/organ/neck_feature/anthro,

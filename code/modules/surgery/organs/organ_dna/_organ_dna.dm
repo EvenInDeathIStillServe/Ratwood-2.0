@@ -67,6 +67,14 @@
 	breasts_organ.lactating = lactating
 	breasts_organ.milk_max = max(75, breasts_organ.breast_size * 100)
 
+/datum/organ_dna/butt
+	var/butt_size = DEFAULT_BUTT_SIZE
+
+/datum/organ_dna/butt/imprint_organ(obj/item/organ/organ)
+	..()
+	var/obj/item/organ/butt/butt_organ = organ
+	butt_organ.butt_size = butt_size
+
 /datum/organ_dna/vagina
 	var/fertility = TRUE
 
