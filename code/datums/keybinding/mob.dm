@@ -21,7 +21,7 @@
 	if(.)
 		return
 	user.movement_locked = FALSE
-
+/*
 /datum/keybinding/mob/block_movement
 	hotkey_keys = list("CtrlShift")
 	classic_keys = list("CtrlShift")
@@ -40,7 +40,7 @@
 	if(.)
 		return
 	user.movement_blocked = FALSE
-
+*/
 /*
 /datum/keybinding/mob/stop_pulling
 	hotkey_keys = list("Z")

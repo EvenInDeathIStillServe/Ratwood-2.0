@@ -564,6 +564,30 @@
 	to_chat(user,span_info("You can't distinguish an object like this."))
 	return
 
+/obj/effect/opportunity
+	name = "Opportunity"
+	icon = 'modular_hearthstone/icons/obj/effects/track.dmi'
+	icon_state = "heart"
+	anchored = TRUE
+	layer = MID_LANDMARK_LAYER
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/marked = TRUE
+
+/obj/effect/opportunity/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(marked)
+		icon_state = "heart_cleared"
+		to_chat(user,span_info("You unmark the opportunity!"))
+		alpha = 30
+	else
+		icon_state = "heart"
+		to_chat(user,span_info("You mark the opportunity!"))
+		alpha = 255
+	marked = !marked
+	return TRUE
+
 #undef ANALYSIS_TERRIBLE
 #undef ANALYSIS_BAD
 #undef ANALYSIS_DECENT
